@@ -39,8 +39,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-    app.$.ajax.url= "https://www.googleapis.com/plus/v1/people/107585565628124978847/activities/public";
-    app.$.ajax.params = {"key":"AIzaSyACOJe6rjYRAWTAuwMnYXrZURzd6pA0OXk","maxResults":10}
+    app.$.ajax.url = 
+    "https://www.googleapis.com/plus/v1/people/107585565628124978847/activities/public";
+    app.$.ajax.params = { "key" : "AIzaSyACOJe6rjYRAWTAuwMnYXrZURzd6pA0OXk" , "maxResults" : 10 }
   });
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
@@ -85,14 +86,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
   };
   /*global gapi*/
-  app.handleResponse = function(event) {
+  app.handleResponse = function() {
     app.response.items.forEach(function(node, index) {
       var div = document.createElement('DIV');
       div.setAttribute('id', 'post-' + index);
-      if(index % 2 == 0)
+      if (index % 2 === 0) {
         app.$.leftPosts.appendChild(div);
-      else
+      } else {
         app.$.rightPosts.appendChild(div);
+      }
       gapi.post.render(div.id, {'href': node.url});
     });
   };

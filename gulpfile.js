@@ -117,6 +117,7 @@ gulp.task('ensureFiles', function(cb) {
 });
 
 // Lint JavaScript
+
 gulp.task('lint', ['ensureFiles'], function() {
   return gulp.src([
       'app/scripts/**/*.js',
@@ -142,6 +143,7 @@ gulp.task('lint', ['ensureFiles'], function() {
 gulp.task('images', function() {
   return imageOptimizeTask('app/images/**/*', dist('images'));
 });
+
 
 // Copy all files at the root level (app)
 gulp.task('copy', function() {
@@ -237,7 +239,7 @@ gulp.task('clean', function() {
 });
 
 // Watch files for changes & reload
-gulp.task('serve', ['lint', 'styles', 'elements'], function() {
+gulp.task('serve', [/*'lint', */'styles', 'elements'], function() {
   browserSync({
     port: 5000,
     notify: false,
