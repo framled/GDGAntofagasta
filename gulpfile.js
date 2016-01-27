@@ -242,6 +242,7 @@ gulp.task('serve', ['lint', 'styles', 'elements'], function() {
     port: 5000,
     notify: false,
     logPrefix: 'PSK',
+    browser: 'google chrome canary',
     snippetOptions: {
       rule: {
         match: '<span id="browser-sync-binding"></span>',
