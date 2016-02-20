@@ -1,0 +1,128 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/byutv-jsonp/byutv-jsonp.html">
+
+
+<dom-module id="event-list">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<iron-ajax
+			id="ajax"
+			method="GET"
+		 	handle-as="json"
+		 	with-credentials
+		 	verbose
+		 	headers='{	"access-control-allow-origin":"*",
+	 					"access-control-allow-credentials":true,
+		 				"access-control-allow-header":"*",
+		 				"accept":"*/*",
+		 				"content-type":"application/json"}'
+		 	on-response="handleResponse"></iron-ajax>
+		<!--<byutv-jsonp
+			id="ajax"
+			
+			on-response="handleResponse"
+		 	last-response="{{events}}"></byutv-jsonp>-->
+		<template is="dom-repeat" items="{{events}}" as="event">
+			<paper-card title="[[event.title]]">
+				<div class="card-content">
+					[[event.description]]
+				</div>
+				<div class="card-action">
+					<a href="[[event.link]]">
+						<paper-button><iron-icon icon=""></iron-icon>ver evento</paper-button>
+					</a>
+				</div>
+			</paper-card>
+		</template>
+	</template>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script>
+		Polymer({
+			is: 'event-list',
+			listeners:{
+				"response": "handleResponse"
+			},
+			properties:{
+				cid:{
+					type: String,
+					notify: true
+				},
+				startDate:{
+					type: String,
+					notify: true
+				},
+				endDate:{
+					type: String,
+					notify: true
+				},
+				events:{
+					type: Array,
+					value: function(){
+						return [];
+					}
+				}
+			},
+			ready: function() {
+
+				/*this._ajax();
+
+				this.$.ajax.url = 'https://developers.google.com/events/feed/json';
+				this.$.ajax.params = {
+					'group': this.cid
+				}
+				this.$.ajax.requestHeaders;
+				this.$.ajax.generateRequest();*/
+
+				var xhr = this.createCORSRequest('GET', "https://developers.google.com/events/feed/json");
+				xhr.addEventListener("load", function(){
+					var responseText = xhr.responseText;
+					console.log(responseText);
+				});
+				xhr.addEventListener("error", function(){
+					console.log('There was an error!');
+				});
+				xhr.send();
+				if (!xhr) {
+					throw new Error('CORS not supported');
+				}
+
+
+				
+			},
+			handleResponse: function(event) {
+				
+				console.log(event)
+			},
+			createCORSRequest : function(method, url){
+				var xhr = new XMLHttpRequest();
+				if ("withCredentials" in xhr) {
+
+					// Check if the XMLHttpRequest object has a "withCredentials" property.
+					// "withCredentials" only exists on XMLHTTPRequest2 objects.
+					xhr.open(method, url, true);
+
+				} else if (typeof XDomainRequest != "undefined") {
+
+					// Otherwise, check if XDomainRequest.
+					// XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+					xhr = new XDomainRequest();
+					xhr.open(this.method, this.url);
+
+				} else {
+
+					// Otherwise, CORS is not supported by the browser.
+					xhr = null;
+
+				}
+				return xhr;
+			},
+			
+		});
+	</script>
+</dom-module>

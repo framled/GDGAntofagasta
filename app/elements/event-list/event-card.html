@@ -1,0 +1,30 @@
+<dom-module id="event-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+				@apply(--shadow-elevation-2dp);
+			}
+		</style>
+		End              string `json:"end,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Title            string `json:"title,omitempty"`
+		TemporalRelation string `json:"temporalRelation,omitempty"`
+		Start            string `json:"start,omitempty"`
+		Link             string `json:"link,omitempty"`
+		Location         string `json:"location,omitempty"`
+		Id               string `json:"id,omitempty"`
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'event-card',
+			properties:{
+				id: String,
+				link: String,
+				location: String,
+				title
+			}
+		});
+	</script>
+</dom-module>

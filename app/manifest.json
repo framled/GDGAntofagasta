@@ -1,5 +1,6 @@
 {
  "name": "App",
+ "permissions":[ "https://developers.google.com","http://localhost:5001", "http://www.gdgchile.cl"],
  "icons": [
   {
    "src": "/images/favicon/android-icon-36x36.png",

@@ -21,13 +21,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
+  <meta name="theme-color" content="#231f20">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="/manifest.json">
 
   <!-- Tile color for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-TileColor" content="#231f20">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -57,6 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/bootstrap.min.css">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -75,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel" drawer-width="210px" force-narrow>
+    <paper-drawer-panel id="paperDrawerPanel" drawer-width="210px" >
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed >
 
@@ -91,11 +92,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Home</span>
           </a>
 
-          <!--<a data-route="users" href="{{baseUrl}}users">
-            <iron-icon icon="info"></iron-icon>
-            <span>Users</span>
+          <!--<a data-route="calendar" href="{{baseUrl}}Agenda">
+            <iron-icon icon="view-agenda"></iron-icon>
+            <span>Agenda</span>
           </a>-->
-
+          <a data-route="about" href="{{baseUrl}}Que_es_GDG">
+            <iron-icon src="images/gdg_gray_logo.png" style="width: 16px"></iron-icon>
+            <span>Que es un GDG?</span>
+          </a>
           <!--<a data-route="contact" href="{{baseUrl}}contact">
             <iron-icon icon="mail"></iron-icon>
             <span>Contact</span>
@@ -111,7 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" class="tall">
-          <paper-icon-button id="paperToggle" icon="menu" hidden></paper-icon-button>
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
           <span class="space"></span>
 
@@ -140,15 +144,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>              
             </section>
 
-            <section data-route="users">
+            <section data-route="calendar">
               <paper-material elevation="1">
-                <h2 class="page-title">Users</h2>
-                <p>This is the users section</p>
-                <a href$="{{baseUrl}}users/Addy">Addy</a><br>
-                <a href$="{{baseUrl}}users/Rob">Rob</a><br>
-                <a href$="{{baseUrl}}users/Chuck">Chuck</a><br>
-                <a href$="{{baseUrl}}users/Sam">Sam</a>
+                <h2 class="page-title">Proximos eventos</h2>
+                
               </paper-material>
+              <event-list cid="100968613806607410565"></event-list>
+              <event-list cid="107585565628124978847">
+              </event-list>
+            </section>
+            <section data-route="about">
+              <div class="row text-center"><h2>¿Que es un GDG?</h2></div>
+              <div class="row">
+                <div id="descriptionContainer" class="col-md-8">
+                  <p>Google Developer Groups (GDGs) son desarrolladores quienes estan interazados en las tecnologias de desarrollador de google; Todo desde Android, Chrome, Drive, y Google Cloud Platforms, a los productos de APIs como Cast API, Maps API, y youtube API.</p>
+
+                  <p class="disclaimer text-uppercase">*GDG Antofagasta es un grupo independiente; las actividades del grupo y opiniones expresadas en aquí no representan las de Google Inc</p>
+                </div>
+                <div class="col-md-4">
+                  <img src="images/gdg_logo.png" class="img-responsive" alt="GDG LOGO">
+                </div>
+              </div>
             </section>
 
             <section data-route="user-info">

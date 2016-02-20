@@ -24,7 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
-
+//var cors = require('cors');
 // var ghPages = require('gulp-gh-pages');
 
 var AUTOPREFIXER_BROWSERS = [
@@ -73,7 +73,7 @@ var optimizeHtmlTask = function(src, dest) {
   });
 
   return gulp.src(src)
-    .pipe(assets)
+    //.pipe(assets) <-- descomentar cuando encuentres el error
     // Concatenate and minify JavaScript
     .pipe($.if('*.js', $.uglify({
       preserveComments: 'some'
@@ -95,6 +95,17 @@ var optimizeHtmlTask = function(src, dest) {
       title: 'html'
     }));
 };
+//cors
+
+var cors = function (req, res, next) {
+  console.log(req.method + " " + req.url);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+};
+
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', function() {
@@ -259,7 +270,7 @@ gulp.task('serve', [/*'lint', */'styles', 'elements'], function() {
     // https: true,
     server: {
       baseDir: ['.tmp', 'app'],
-      middleware: [historyApiFallback()]
+      middleware: [historyApiFallback(),cors]
     }
   });
 
@@ -289,7 +300,7 @@ gulp.task('serve:dist', ['default'], function() {
     //       will present a certificate warning in the browser.
     // https: true,
     server: dist(),
-    middleware: [historyApiFallback()]
+    middleware: [historyApiFallback(),cors]
   });
 });
 
@@ -299,9 +310,10 @@ gulp.task('default', ['clean'], function(cb) {
   runSequence(
     ['copy', 'styles'],
     'elements',
-    ['lint', 'images', 'fonts', 'html'],
-    'vulcanize', // 'cache-config',
+    [/*'lint',*/ 'images','fonts','html'],
+    'vulcanize',// 'cache-config',
     cb);
+    
 });
 
 // Build then deploy to GitHub pages gh-pages branch

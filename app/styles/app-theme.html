@@ -30,7 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --secondary-text-color: #737373;
     --disabled-text-color: #9b9b9b;
     --divider-color: #dbdbdb;
-    --primary-color: #3f51b5;
+    /*--primary-color: #3f51b5;*/
+    --primary-color: #231f20;
     --light-primary-color: #c5cae9;
     --dark-primary-color: #303f9f;
     --accent-color: #ff4081;
@@ -69,7 +70,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   #drawerToolbar .menu-name {
     @apply(--paper-font-title);
   }
-
+  paper-scroll-header-panel[main]{
+    --paper-scroll-header-panel-full-header:{
+      background-color: #231f20;
+      background-image: url(../images/gdg_logo.png);
+      background-position: right;
+      background-size: 35%;
+    }; 
+    --paper-scroll-header-panel-condensed-header:{
+      background-color: #231f20;
+      background-image: url(../images/gdg_logo.png);
+      background-position: left;
+      background-size: 10%;
+    };
+  }
   paper-scroll-header-panel {
     height: 100%;
   }
@@ -104,7 +118,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     min-height: 48px;
     padding: 0 16px;
   }
-
+  #mainToolbar{
+    background-color: rgba(0,0,0,0);
+  }
   #mainToolbar.tall .app-name {
     font-size: 40px;
     font-weight: 300;
@@ -156,7 +172,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   .content {
     height: 900px;
   }
-
   section[data-route="home"] paper-material {
     @apply(--paper-font-body2);
   }
@@ -164,7 +179,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   section[data-route="home"] paper-material .subhead {
     @apply(--paper-font-subhead);
   }
-
+  div#descriptionContainer{
+    padding:1em;
+    margin: 0 1em;
+  }
+  .disclaimer{
+    margin-top: 1em;
+    font-weight: 500;
+  }
   paper-material {
     border-radius: 2px;
     height: 100%;
@@ -221,7 +243,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
   }
-
+  @media all and (min-width: 0) and (max-width: 440px){
+    #posts{
+      width: 440px;
+    }
+  }
+  @media all and (min-width: 899) {
+    #posts{
+      width: 900px;
+    }
+  }
   /* Material Design Adaptive Breakpoints */
   /*
     Below you'll find CSS media queries based on the breakpoint guidance
@@ -232,7 +263,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    */
 
   /* mobile-small */
-  @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) { }
+  @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) { 
+
+  }
   /* mobile-large */
   @media all and (min-width: 361px) and (orientation: portrait) { }
   /* mobile-small-landscape */
