@@ -1,5 +1,6 @@
 {
  "name": "App",
+ "short_name": "GDG Antofagasta",
  "permissions":[ "https://developers.google.com","http://localhost:5001", "http://www.gdgchile.cl"],
  "icons": [
   {
@@ -38,5 +39,8 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+  "background_color": "#231f20",
+  "display": "standalone",
+  "theme_color": "#231f20"
 }

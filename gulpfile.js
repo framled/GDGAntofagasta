@@ -24,7 +24,9 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
+
 //var cors = require('cors');
+
 // var ghPages = require('gulp-gh-pages');
 
 var AUTOPREFIXER_BROWSERS = [
@@ -73,7 +75,8 @@ var optimizeHtmlTask = function(src, dest) {
   });
 
   return gulp.src(src)
-    //.pipe(assets) <-- descomentar cuando encuentres el error
+    .pipe(assets) <-- descomentar cuando encuentres el error
+
     // Concatenate and minify JavaScript
     .pipe($.if('*.js', $.uglify({
       preserveComments: 'some'
@@ -95,7 +98,8 @@ var optimizeHtmlTask = function(src, dest) {
       title: 'html'
     }));
 };
-//cors
+
+
 
 var cors = function (req, res, next) {
   console.log(req.method + " " + req.url);
@@ -120,41 +124,17 @@ gulp.task('elements', function() {
 // "dot" files are specifically tricky due to them being hidden on
 // some systems.
 gulp.task('ensureFiles', function(cb) {
-  var requiredFiles = ['.jscsrc', '.jshintrc', '.bowerrc'];
+  var requiredFiles = ['.bowerrc'];
 
   ensureFiles(requiredFiles.map(function(p) {
     return path.join(__dirname, p);
   }), cb);
 });
 
-// Lint JavaScript
-
-gulp.task('lint', ['ensureFiles'], function() {
-  return gulp.src([
-      'app/scripts/**/*.js',
-      'app/elements/**/*.js',
-      'app/elements/**/*.html',
-      'gulpfile.js'
-    ])
-    .pipe(reload({
-      stream: true,
-      once: true
-    }))
-
-  // JSCS has not yet a extract option
-  .pipe($.if('*.html', $.htmlExtract({strip: true})))
-  .pipe($.jshint())
-  .pipe($.jscs())
-  .pipe($.jscsStylish.combineWithHintResults())
-  .pipe($.jshint.reporter('jshint-stylish'))
-  .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
-});
-
 // Optimize images
 gulp.task('images', function() {
   return imageOptimizeTask('app/images/**/*', dist('images'));
 });
-
 
 // Copy all files at the root level (app)
 gulp.task('copy', function() {
@@ -250,7 +230,8 @@ gulp.task('clean', function() {
 });
 
 // Watch files for changes & reload
-gulp.task('serve', [/*'lint', */'styles', 'elements'], function() {
+gulp.task('serve', ['styles', 'elements'], function() {
+
   browserSync({
     port: 5000,
     notify: false,
@@ -270,14 +251,14 @@ gulp.task('serve', [/*'lint', */'styles', 'elements'], function() {
     // https: true,
     server: {
       baseDir: ['.tmp', 'app'],
-      middleware: [historyApiFallback(),cors]
+      middleware: [historyApiFallback()]
     }
   });
 
-  gulp.watch(['app/**/*.html'], reload);
+  gulp.watch(['app/**/*.html', '!app/bower_components/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
   gulp.watch(['app/elements/**/*.css'], ['elements', reload]);
-  gulp.watch(['app/{scripts,elements}/**/{*.js,*.html}'], ['lint']);
+  gulp.watch(['app/scripts/**/*.js'], reload);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -300,7 +281,7 @@ gulp.task('serve:dist', ['default'], function() {
     //       will present a certificate warning in the browser.
     // https: true,
     server: dist(),
-    middleware: [historyApiFallback(),cors]
+    middleware: [historyApiFallback()]
   });
 });
 
@@ -308,12 +289,11 @@ gulp.task('serve:dist', ['default'], function() {
 gulp.task('default', ['clean'], function(cb) {
   // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
-    ['copy', 'styles'],
+    ['ensureFiles', 'copy', 'styles'],
     'elements',
-    [/*'lint',*/ 'images','fonts','html'],
-    'vulcanize',// 'cache-config',
+    ['images', 'fonts', 'html'],
+    'vulcanize', // 'cache-config',
     cb);
-    
 });
 
 // Build then deploy to GitHub pages gh-pages branch
