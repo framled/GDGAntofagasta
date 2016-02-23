@@ -24,10 +24,10 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
-
-//var cors = require('cors');
+var gutil = require('gulp-util');
 
 // var ghPages = require('gulp-gh-pages');
+var debug = require('gulp-debug');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -61,6 +61,7 @@ var styleTask = function(stylesPath, srcs) {
 
 var imageOptimizeTask = function(src, dest) {
   return gulp.src(src)
+    .pipe(debug({title: 'images'}))
     .pipe($.imagemin({
       progressive: true,
       interlaced: true
@@ -73,10 +74,9 @@ var optimizeHtmlTask = function(src, dest) {
   var assets = $.useref.assets({
     searchPath: ['.tmp', 'app']
   });
-
   return gulp.src(src)
-    .pipe(assets) <-- descomentar cuando encuentres el error
-
+    .pipe(debug({title: 'html'}))
+    .pipe(assets)
     // Concatenate and minify JavaScript
     .pipe($.if('*.js', $.uglify({
       preserveComments: 'some'
@@ -98,18 +98,6 @@ var optimizeHtmlTask = function(src, dest) {
       title: 'html'
     }));
 };
-
-
-
-var cors = function (req, res, next) {
-  console.log(req.method + " " + req.url);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-};
-
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', function() {
@@ -231,12 +219,10 @@ gulp.task('clean', function() {
 
 // Watch files for changes & reload
 gulp.task('serve', ['styles', 'elements'], function() {
-
   browserSync({
     port: 5000,
     notify: false,
     logPrefix: 'PSK',
-    browser: 'google chrome canary',
     snippetOptions: {
       rule: {
         match: '<span id="browser-sync-binding"></span>',

@@ -1,0 +1,71 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <user-card-service></user-card-service>
+
+Example:
+
+    <user-card-service>
+      <h2>Hello my-elem</h2>
+    </user-card-service>
+
+@demo demo/index.html
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="user-card.html">
+
+<!-- Iron Elements -->
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="user-card-service">
+	<template>
+		<style>
+			:host {
+				display: block;
+				@apply(--layout-horizontal);
+				@apply(--layout-wrap);
+			}
+			section{
+				margin:auto;
+				width: auto;
+			}
+			user-card{
+				margin-right: .5em;
+				margin-bottom: 1em;
+			}
+		</style>
+		<iron-ajax
+		 	auto
+		 	url="user-list.json"
+		 	handle-as="json"
+		 	on-response="handleResponse"
+		 	last-response="{{response}}"></iron-ajax>
+		 <section>
+		<template is="dom-repeat" items="[[response]]">
+			<user-card name="[[item.name]]" occupation="[[item.occupation]]">
+				<img src="[[item.avatar]]">
+				<h4 class="title">[[item.title]]</h4>
+				<p class="resume">[[item.resume]]</p>
+			</user-card>
+		</template>
+		</section>
+	</template>
+	<script>
+		Polymer({
+			is: 'user-card-service',
+			properties:{
+				url:{
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				}
+			},
+			handleResponse: function(){
+				console.log(this.response);
+			}
+		});
+	</script>
+</dom-module>

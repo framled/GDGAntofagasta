@@ -24,41 +24,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="theme-color" content="#231f20">
 
   <!-- Web Application Manifest -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
 
   <!-- Tile color for Win8 -->
   <meta name="msapplication-TileColor" content="#231f20">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="PSK">
+  <meta name="application-name" content="GDG Antofagasta">
 
-  <link rel="icon" sizes="192x192" href="/images/touch/chrome-touch-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="images/favicon/android-icon-192x192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="GDG Antofagasta">
-  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-precomposed.png">
 
   <!-- Tile icon for Win8 (144x144) -->
-  <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="images/favicon/ms-icon-144x144.png">
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/bootstrap.min.css">
+  <!-- endbuild-->
+  <!-- build:css styles/bootstrap.min.css -->
+  <link rel="stylesheet" href="styles/bootstrap.css">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -88,23 +78,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Drawer Content -->
         <paper-menu attr-for-selected="data-route" selected="[[route]]">
+
           <a data-route="home" href="{{baseUrl}}">
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
 
-          <!--<a data-route="calendar" href="{{baseUrl}}Agenda">
-            <iron-icon icon="view-agenda"></iron-icon>
-            <span>Agenda</span>
-          </a>-->
           <a data-route="about" href="{{baseUrl}}Que_es_GDG">
             <iron-icon src="images/gdg_gray_logo.png" style="width: 16px"></iron-icon>
             <span>Que es un GDG?</span>
           </a>
-          <!--<a data-route="contact" href="{{baseUrl}}contact">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
-          </a>-->
+
+          <a data-route="iwd" href="{{baseUrl}}IWD">
+            <iron-icon icon="info"></iron-icon>
+            <span>IWD</span>
+          </a>
+
         </paper-menu>
       </paper-scroll-header-panel>
       <iron-ajax id="ajax"
@@ -121,10 +110,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <span class="space"></span>
 
-          <!-- Toolbar icons 
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
-          -->
+          <!-- Toolbar icons -->
+
+
           <!-- Application name -->
           <div class="middle middle-container">
             <div class="app-name">GDG Antofagasta</div>
@@ -155,33 +143,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <event-list cid="107585565628124978847">
               </event-list>
             </section>
+
             <section data-route="about">
               <div class="row text-center"><h2>¿Que es un GDG?</h2></div>
               <div class="row">
-                <div id="descriptionContainer" class="col-md-8">
-                  <p>Google Developer Groups (GDGs) son desarrolladores quienes estan interazados en las tecnologias de desarrollador de google; Todo desde Android, Chrome, Drive, y Google Cloud Platforms, a los productos de APIs como Cast API, Maps API, y youtube API.</p>
+                <div class="col-md-8">
+                  <div id="descriptionContainer">
+                    <p>Google Developer Groups (GDGs) son desarrolladores quienes estan interazados en las tecnologias de desarrollador de google; Todo desde Android, Chrome, Drive, y Google Cloud Platforms, a los productos de APIs como Cast API, Maps API, y youtube API.</p>
 
-                  <p class="disclaimer text-uppercase">*GDG Antofagasta es un grupo independiente; las actividades del grupo y opiniones expresadas en aquí no representan las de Google Inc</p>
+                    <p class="disclaimer text-uppercase">*GDG Antofagasta es un grupo independiente; las actividades del grupo y opiniones expresadas en aquí no representan las de Google Inc</p>
+                  </div>
+                  <div class="row">
+                    <a href="https://plus.google.com/107585565628124978847">
+                      <paper-button class="join-us gplus">Unete a nosotros en Gplus </paper-button>
+                    </a>
+                    <a href="https://www.facebook.com/GdgAntofagasta/">
+                      <paper-button class="join-us facebook">Unete a nosotros en facebook </paper-button>
+                    </a>
+                  </div>
                 </div>
                 <div class="col-md-4">
                   <img src="images/gdg_logo.png" class="img-responsive" alt="GDG LOGO">
                 </div>
               </div>
             </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="page-title">User: {{params.name}}</h2>
-                <div>This is {{params.name}}'s section</div>
-              </paper-material>
+            <section data-route="iwd">
+              <div class="row text-center"><h2>International Woman Day's</h2></div>
+              <div class="row">
+                <div id="descriptionContainer"></div>
+              </div>
+              <div class="row">
+                <user-card-service></user-card-service>
+              </div>
             </section>
-
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="page-title">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
+            
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
@@ -218,9 +213,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                //         E.g., 'explicit','onload'
     }
   </script>
-  <!-- build:js https://apis.google.com/js/platform.js -->
   <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
-  <!-- endbuild-->
+  
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
